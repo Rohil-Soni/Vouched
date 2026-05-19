@@ -8,13 +8,13 @@ export default function Navbar() {
     <nav className="navbar">
       <NavLink to="/feed" className="navbar__brand">Vouched</NavLink>
       <div className="navbar__links">
-        <NavLink to="/feed" className={({ isActive }) => isActive ? 'nav-link nav-link--active' : 'nav-link'}>Feed</NavLink>
-        <NavLink to="/archive" className={({ isActive }) => isActive ? 'nav-link nav-link--active' : 'nav-link'}>Archive</NavLink>
+        <NavLink to="/feed" className={({ isActive }) => `nav-link${isActive ? ' nav-link--active' : ''}`}>Feed</NavLink>
+        <NavLink to="/archive" className={({ isActive }) => `nav-link${isActive ? ' nav-link--active' : ''}`}>Archive</NavLink>
         {user?.role === 'SENIOR' && (
-          <NavLink to="/submit" className={({ isActive }) => isActive ? 'nav-link nav-link--active' : 'nav-link'}>+ Tip</NavLink>
+          <NavLink to="/submit" className="nav-link nav-link--submit">+ Tip</NavLink>
         )}
-        <NavLink to="/profile" className={({ isActive }) => isActive ? 'nav-link nav-link--active' : 'nav-link'}>
-          {user?.name?.split(' ')[0]} · {user?.credibility_score}
+        <NavLink to="/profile" className={({ isActive }) => `nav-link${isActive ? ' nav-link--active' : ''}`}>
+          {user?.name?.split(' ')[0]} <span style={{opacity:0.5}}>·</span> <span style={{color:'var(--accent)'}}>{user?.credibility_score}</span>
         </NavLink>
       </div>
     </nav>

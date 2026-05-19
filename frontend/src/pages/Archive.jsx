@@ -10,6 +10,7 @@ export default function Archive() {
   const [vouching, setVouching] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     const params = filter !== 'ALL' ? `?category=${encodeURIComponent(filter)}` : '';
     api.get(`/archive${params}`)
       .then(({ data }) => setEntries(data))
@@ -27,36 +28,45 @@ export default function Archive() {
   };
 
   return (
-    <div className="page">
-      <h2>Unwritten Rules Archive</h2>
-      <p className="page__subtitle">Anonymous. Moderated. Permanent institutional truth.</p>
+    <div className="main">
+      <div className="page-header">
+        <h2>Unwritten Rules Archive</h2>
+        <p className="page__subtitle">Anonymous. Moderated. Permanent institutional truth.</p>
+      </div>
 
-      <div className="feed__filters">
+      <div className="filters">
         {CATEGORIES.map(cat => (
-          <button key={cat} className={`filter-btn ${filter === cat ? 'filter-btn--active' : ''}`}
-            onClick={() => setFilter(cat)}>{cat}</button>
+          <button key={cat} className={`filter-btn ${filter === cat ? 'filter-btn--active' : ''}`} onClick={() => setFilter(cat)}>
+            {cat}
+          </button>
         ))}
       </div>
 
-      {loading && <p className="loading">Loading archive...</p>}
-      {!loading && entries.length === 0 && <p className="empty">No entries yet for this category.</p>}
+      {loading && <div className="loading">Loading archive...</div>}
 
-      <div className="archive__list">
+      {!loading && entries.length === 0 && (
+        <div className="empty-state">
+          <div className="empty-state__icon">📖</div>
+          <div className="empty-state__title">Archive is empty</div>
+          <div className="empty-state__desc">Seniors haven't submitted any entries yet for this category.</div>
+        </div>
+      )}
+
+      <div className="archive-grid">
         {entries.map(entry => (
           <div key={entry.id} className="archive-card">
             <div className="archive-card__meta">
               <span className="archive-card__category">{entry.category}</span>
               {entry.branch && <span className="archive-card__branch">{entry.branch}</span>}
+              <span className="archive-card__anon">Anonymous Senior</span>
             </div>
             <p className="archive-card__body">{entry.body}</p>
             <div className="archive-card__footer">
-              <span>Vouched by {entry.vouch_count} seniors</span>
-              <button
-                className="btn-vouch"
-                onClick={() => handleVouch(entry.id)}
-                disabled={vouching === entry.id}
-              >
-                {vouching === entry.id ? '...' : 'Still accurate ✓'}
+              <span className="archive-card__vouches">
+                Vouched by <span>{entry.vouch_count}</span> seniors
+              </span>
+              <button className="btn-vouch" onClick={() => handleVouch(entry.id)} disabled={vouching === entry.id}>
+                {vouching === entry.id ? '...' : '✓ Still accurate'}
               </button>
             </div>
           </div>

@@ -13,7 +13,7 @@ const nudgeRoutes = require('./routes/nudges');
 const app = express();
 
 app.use(helmet());
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+app.use(cors({ origin: /^http:\/\/localhost:\d+$/, credentials: true }));
 app.use(express.json());
 
 // Health check endpoint

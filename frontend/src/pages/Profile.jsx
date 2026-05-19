@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../api';
 
-const DELTA_LABELS = {
+const LABELS = {
   tip_confirmed: 'Tip confirmed accurate',
   dispute_upheld: 'Dispute upheld against your tip',
   dispute_rejected: 'Your dispute was rejected',
@@ -22,39 +22,49 @@ export default function Profile() {
   }, []);
 
   if (!user) return null;
+  const initials = user.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
 
   return (
-    <div className="page page--narrow">
-      <div className="profile__header">
-        <div>
+    <div className="main page--narrow">
+      <div className="profile-hero">
+        <div className="profile-avatar">{initials}</div>
+        <div className="profile-info">
           <h2>{user.name}</h2>
-          <p className="profile__meta">{user.role} · {user.branch} · Year {user.year_of_study}</p>
-          <p className="profile__email">{user.email}</p>
+          <p className="profile-meta">{user.role} · {user.branch} · Year {user.year_of_study}</p>
+          <p className="profile-meta" style={{marginTop: 2}}>{user.email}</p>
         </div>
-        <div className="profile__score">
-          <span className="score__number">{user.credibility_score}</span>
-          <span className="score__label">Credibility</span>
+        <div className="profile-score">
+          <div className="score-number">{user.credibility_score}</div>
+          <div className="score-label">Credibility</div>
         </div>
       </div>
 
-      <div className="profile__bar">
-        <div className="profile__bar-fill" style={{ width: `${user.credibility_score}%` }} />
+      <div className="score-bar">
+        <div className="score-bar-fill" style={{ width: `${user.credibility_score}%` }} />
       </div>
 
-      <h3>Credibility History</h3>
-      {loading && <p className="loading">Loading...</p>}
-      {!loading && history.length === 0 && <p className="empty">No credibility events yet.</p>}
-      <ul className="cred-history">
+      <p className="section-title">Credibility History</p>
+
+      {loading && <div className="loading">Loading...</div>}
+      {!loading && history.length === 0 && (
+        <div className="empty-state">
+          <div className="empty-state__icon">📊</div>
+          <div className="empty-state__title">No events yet</div>
+          <div className="empty-state__desc">Submit or co-sign tips to start building your credibility.</div>
+        </div>
+      )}
+
+      <div className="cred-list">
         {history.map((ev, i) => (
-          <li key={i} className={`cred-event ${ev.delta > 0 ? 'cred-event--pos' : 'cred-event--neg'}`}>
-            <span>{DELTA_LABELS[ev.reason] || ev.reason}</span>
-            <span className="cred-event__delta">{ev.delta > 0 ? `+${ev.delta}` : ev.delta}</span>
-            <span className="cred-event__date">{new Date(ev.created_at).toLocaleDateString()}</span>
-          </li>
+          <div key={i} className={`cred-item ${ev.delta > 0 ? 'cred-item--pos' : 'cred-item--neg'}`}>
+            <span className="cred-item__label">{LABELS[ev.reason] || ev.reason}</span>
+            <span className="cred-item__delta">{ev.delta > 0 ? `+${ev.delta}` : ev.delta}</span>
+            <span className="cred-item__date">{new Date(ev.created_at).toLocaleDateString()}</span>
+          </div>
         ))}
-      </ul>
+      </div>
 
-      <button className="btn-logout" onClick={logout}>Logout</button>
+      <button className="btn btn-danger" style={{marginTop: 32}} onClick={logout}>Logout</button>
     </div>
   );
 }
