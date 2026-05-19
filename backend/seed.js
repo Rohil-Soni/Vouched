@@ -7,10 +7,19 @@ const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 async function seed() {
   console.log('Seeding database with comprehensive test data...');
 
-  // Get college id for juetguna.in
+  // Create or get college
+  const collegeId = uuidv4();
+  await pool.query(
+    `INSERT INTO colleges (id, name, email_domain, city) 
+     VALUES ($1, 'JUET Guna', 'juetguna.in', 'Guna') 
+     ON CONFLICT (email_domain) DO NOTHING`,
+    [collegeId]
+  );
+  
+  // Get actual college id (in case it already existed)
   const { rows: colleges } = await pool.query("SELECT id FROM colleges WHERE email_domain='juetguna.in'");
-  if (!colleges.length) { console.error('College juetguna.in not found. Run the setup first.'); process.exit(1); }
-  const collegeId = colleges[0].id;
+  if (!colleges.length) { console.error('College juetguna.in not found.'); process.exit(1); }
+  const actualCollegeId = colleges[0].id;
 
   // Create test users with various credibility scores
   const senior1 = uuidv4(), senior2 = uuidv4(), senior3 = uuidv4(), 
@@ -26,15 +35,14 @@ async function seed() {
       ($5, 'fresher2@juetguna.in', 'Shreya Patel', $7, 'ECE', 2, 'FRESHER', 55, true),
       ($6, 'moderator1@juetguna.in', 'Dev Singh', $7, 'CSE', 4, 'MODERATOR', 88, true)
     ON CONFLICT (email) DO NOTHING
-  `, [senior1, senior2, senior3, fresher1, fresher2, moderator1, collegeId]);
-
+  `, [senior1, senior2, senior3, fresher1, fresher2, moderator1, actualCollegeId]);
   // Re-fetch actual IDs in case they already existed
-  const { rows: users } = await pool.query("SELECT id, email FROM users WHERE college_id = $1 ORDER BY email", [collegeId]);
+  const { rows: users } = await pool.query("SELECT id, email FROM users WHERE college_id = $1 ORDER BY email", [actualCollegeId]);
   const userMap = {};
   users.forEach(u => userMap[u.email] = u.id);
 
-  const s1id = userMap['senior1@juetguna.in'];
-  const s2id = userMap['senior2@juetguna.in'];
+  const s1id = userMap["senior1@juetguna.in"];
+  const s2id = userMap["senior2@juetguna.in"];
   const s3id = userMap['senior3@juetguna.in'];
   const f1id = userMap['fresher1@juetguna.in'];
   const f2id = userMap['fresher2@juetguna.in'];
@@ -97,7 +105,7 @@ async function seed() {
       INSERT INTO tips (id, author_id, cosigner_id, college_id, title, body, category, confidence_stake, branch_scope, expiry_date, status)
       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9::text[],$10,'LIVE')
       ON CONFLICT DO NOTHING
-    `, [t.id, t.author, t.cosigner, collegeId, t.title, t.body, t.category, t.stake, t.branch, t.expiry]);
+    `, [t.id, t.author, t.cosigner, actualCollegeId, t.title, t.body, t.category, t.stake, t.branch, t.expiry]);
   }
 
   // Create a disputed tip to show in moderator queue
@@ -106,7 +114,7 @@ async function seed() {
     INSERT INTO tips (id, author_id, cosigner_id, college_id, title, body, category, confidence_stake, branch_scope, expiry_date, status)
     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9::text[],$10,'LIVE')
     ON CONFLICT DO NOTHING
-  `, [disputedTipId, s1id, s2id, collegeId, 'Internship applications close 5pm sharp — no late submissions', 
+  `, [disputedTipId, s1id, s2id, actualCollegeId, 'Internship applications close 5pm sharp — no late submissions', 
       'The placement cell closes the internship application portal at exactly 5:00 PM IST. Submissions even 1 minute after get rejected. Multiple friends have lost opportunities due to this.',
       'PLACEMENT', 'HIGH', '{CSE,ECE}', new Date(Date.now() + 8 * 86400000).toISOString().split('T')[0]]);
 
@@ -124,7 +132,7 @@ async function seed() {
     await pool.query(`
       INSERT INTO users (id, email, name, college_id, branch, year_of_study, role, credibility_score, is_verified)
       VALUES ($1, $2, 'The Joker', $3, 'CSE', 2, 'FRESHER', 30, true)
-    `, [jokerId, dishonestReporterEmail, collegeId]);
+    `, [jokerId, dishonestReporterEmail, actualCollegeId]);
   }
 
   await pool.query(`
@@ -150,7 +158,7 @@ async function seed() {
       INSERT INTO archive_entries (id, college_id, category, body, status, vouch_count, expires_at)
       VALUES ($1,$2,$3,$4,'LIVE',2, NOW() + INTERVAL '2 years')
       ON CONFLICT DO NOTHING
-    `, [uuidv4(), collegeId, e.category, e.body]);
+    `, [uuidv4(), actualCollegeId, e.category, e.body]);
   }
 
   // Log credibility changes to show in profile
