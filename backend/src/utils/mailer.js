@@ -51,7 +51,7 @@ const sendOTP = async (to, otp) => {
     </div>
   </body>
 </html>
-`;
+`.replace(/`/g, '\`'); // Escape any backticks within the HTML
 
   const data = JSON.stringify({
     from: { email: 'support@vouched.com', name: 'Vouched Support' },
