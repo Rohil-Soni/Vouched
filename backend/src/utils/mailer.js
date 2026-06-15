@@ -1,5 +1,4 @@
-const nodemailer = require('nodemailer');
-const fetch = require('node-fetch');  // for Mailtrap API
+const https = require('https');
 
 const isDev = !process.env.MAILTRAP_API_TOKEN;
 
@@ -54,42 +53,49 @@ const sendOTP = async (to, otp) => {
 </html>
 `;
 
-  try {
-    const response = await fetch(`https://send.api.mailtrap.io/api/send`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Api-Token': process.env.MAILTRAP_API_TOKEN
-      },
-      body: JSON.stringify({
-        from: {
-          email: `support@vouched.com`,
-          name: `Vouched Support`
-        },
-        to: [
-          {
-            email: to
-          }
-        ],
-        subject: `🔐 Your Vouched verification code: ${otp}`,
-        html: htmlContent,
-        text: `Your OTP is: ${otp}. Valid for 10 minutes.`,
-        inbox_id: process.env.MAILTRAP_INBOX_ID || '1234567'
-      })
+  const data = JSON.stringify({
+    from: { email: 'support@vouched.com', name: 'Vouched Support' },
+    to: [{ email: to }],
+    subject: `🔐 Your Vouched verification code: ${otp}`,
+    html: htmlContent,
+    text: `Your OTP is: ${otp}. Valid for 10 minutes.`,
+    inbox_id: parseInt(process.env.MAILTRAP_INBOX_ID) || 4713052
+  });
+
+  const options = {
+    hostname: 'send.api.mailtrap.io',
+    path: '/api/send',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Api-Token': process.env.MAILTRAP_API_TOKEN,
+      'Content-Length': data.length
+    }
+  };
+
+  return new Promise((resolve, reject) => {
+    const req = https.request(options, (res) => {
+      let responseBody = '';
+      res.on('data', (chunk) => responseBody += chunk);
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          console.log(`[MAILER] Email sent successfully to ${to}`);
+          resolve(true);
+        } else {
+          console.error(`[MAILER] Mailtrap API error:`, responseBody);
+          reject(new Error('Mailtrap API error'));
+        }
+      });
     });
 
-    if (response.ok) {
-      console.log(`[MAILER] Email sent successfully to ${to}`);
-      return true;
-    } else {
-      const error = await response.json();
-      console.error(`[MAILER] Failed to send email to ${to}:`, error);
-      throw new Error('Mailtrap API error');
-    }
-  } catch (err) {
-    console.error(`[MAILER] Failed to send email to ${to}:`, err.message);
-    throw err;
-  }
+    req.on('error', (err) => {
+      console.error(`[MAILER] Failed to send email to ${to}:`, err.message);
+      reject(err);
+    });
+
+    req.write(data);
+    req.end();
+  });
 };
 
 module.exports = { sendOTP };
