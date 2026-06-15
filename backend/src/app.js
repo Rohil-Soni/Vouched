@@ -26,15 +26,22 @@ app.use(helmet({
 }));
 
 // CORS configuration - environment-aware
-const corsOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
-const allowedOrigins = process.env.NODE_ENV === 'production' 
-  ? [corsOrigin]
-  : [corsOrigin, 'http://localhost:5173', 'http://localhost:3000', 'http://localhost:5000'];
+const allowedOrigins = [
+  'https://vouched.netlify.app',
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://localhost:5000',
+];
+
+// Also allow the CLIENT_URL env var if set (for custom domains)
+if (process.env.CLIENT_URL && !allowedOrigins.includes(process.env.CLIENT_URL)) {
+  allowedOrigins.push(process.env.CLIENT_URL);
+}
 
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
@@ -49,7 +56,11 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Health check endpoint
+// Health check endpoints (Render uses /healthz, humans use /)
+app.get('/healthz', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 app.get('/', (req, res) => {
   res.json({ message: 'Vouched API is running', status: 'ok', timestamp: new Date().toISOString() });
 });
