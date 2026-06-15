@@ -23,7 +23,7 @@ const sendOTP = async (to, otp) => {
     subject: `Your OTP: ${otp}`,
     html: htmlContent,
     text: `Your OTP is: ${otp}. Valid for 10 minutes.`,
-    inbox_ids: parseInt(process.env.MAILTRAP_INBOX_ID) || 4713052
+    inbox_id: parseInt(process.env.MAILTRAP_INBOX_ID) || 4713052
   };
 
   // Log the payload before stringifying (for debugging)
