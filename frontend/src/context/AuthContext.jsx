@@ -11,8 +11,14 @@ export function AuthProvider({ children }) {
     const token = localStorage.getItem('token');
     if (token) {
       api.get('/users/me')
-        .then(({ data }) => setUser(data))
-        .catch(() => localStorage.removeItem('token'))
+        .then(({ data }) => {
+          console.log('[AUTH DEBUG] User:', data); // Debug log
+          setUser(data)
+        })
+        .catch((err) => {
+          console.error('[AUTH DEBUG] Error fetching user:', err);
+          localStorage.removeItem('token');
+        })
         .finally(() => setLoading(false));
     } else {
       setLoading(false);
