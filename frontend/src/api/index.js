@@ -14,7 +14,8 @@ api.interceptors.response.use(
     if (err.response?.status === 401 && !err.config._retry) {
       err.config._retry = true;
       try {
-        const { data } = await axios.post('/auth/refresh', {}, { withCredentials: true });
+        const base = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        const { data } = await axios.post(`${base}/auth/refresh`, {}, { withCredentials: true });
         localStorage.setItem('token', data.token);
         err.config.headers.Authorization = `Bearer ${data.token}`;
         return api(err.config);

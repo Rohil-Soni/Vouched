@@ -41,8 +41,8 @@ const verifyOTP = async (req, res, next) => {
     otpStore.delete(email);
 
     const token = jwt.sign({ id: rows[0].id, role: rows[0].role }, process.env.JWT_SECRET, { expiresIn: '15m' });
-    const refresh = jwt.sign({ id: rows[0].id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '30d' });
-    res.cookie('refresh', refresh, { httpOnly: true, sameSite: 'strict' });
+    const refresh = jwt.sign({ id: rows[0].id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '365d' });
+    res.cookie('refresh', refresh, { httpOnly: true, sameSite: 'none', secure: true, maxAge: 365 * 24 * 60 * 60 * 1000 });
     res.json({ token, user: rows[0] });
   } catch (err) { next(err); }
 };
@@ -70,8 +70,8 @@ const verifyLoginOTP = async (req, res, next) => {
 
     otpStore.delete(email);
     const token = jwt.sign({ id: record.userId, role: record.role }, process.env.JWT_SECRET, { expiresIn: '15m' });
-    const refresh = jwt.sign({ id: record.userId }, process.env.JWT_REFRESH_SECRET, { expiresIn: '30d' });
-    res.cookie('refresh', refresh, { httpOnly: true, sameSite: 'strict' });
+    const refresh = jwt.sign({ id: record.userId }, process.env.JWT_REFRESH_SECRET, { expiresIn: '365d' });
+    res.cookie('refresh', refresh, { httpOnly: true, sameSite: 'none', secure: true, maxAge: 365 * 24 * 60 * 60 * 1000 });
     res.json({ token });
   } catch (err) { next(err); }
 };

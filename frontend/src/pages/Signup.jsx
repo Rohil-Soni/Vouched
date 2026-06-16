@@ -2,6 +2,17 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
 
+const EMAIL_STORAGE_KEY = 'vouched_emails';
+
+function addSavedEmail(email) {
+  try {
+    const stored = localStorage.getItem(EMAIL_STORAGE_KEY);
+    const list = stored ? JSON.parse(stored).filter(e => e !== email) : [];
+    list.unshift(email);
+    localStorage.setItem(EMAIL_STORAGE_KEY, JSON.stringify(list.slice(0, 5)));
+  } catch {}
+}
+
 export default function Signup() {
   const [step, setStep] = useState('form');
   const [form, setForm] = useState({ email: '', name: '', branch: '', year_of_study: '' });
@@ -26,6 +37,7 @@ export default function Signup() {
     setError(''); setLoading(true);
     try {
       const { data } = await api.post('/auth/verify-otp', { email: form.email, otp });
+      addSavedEmail(form.email);
       localStorage.setItem('token', data.token);
       navigate('/feed');
     } catch (err) {
@@ -44,11 +56,11 @@ export default function Signup() {
         <form onSubmit={handleVerify} style={{marginTop: 16}}>
           <input value={otp} onChange={e => setOtp(e.target.value)} placeholder="Enter 6-digit OTP" required maxLength={6} style={{textAlign:'center', fontSize: 22, letterSpacing: 8, fontWeight: 700}} />
           <button type="submit" className="btn btn-primary" style={{marginTop: 14}} disabled={loading}>
-            {loading ? 'Verifying...' : 'Verify & Continue →'}
+            {loading ? 'Verifying...' : 'Verify & Continue \u2192'}
           </button>
         </form>
         <p className="footer-link" style={{marginTop: 16}}>
-          <a href="#" onClick={() => setStep('form')}>← Back</a>
+          <a href="#" onClick={() => setStep('form')}>{"\u2190"} Back</a>
         </p>
       </div>
     </div>
@@ -81,7 +93,7 @@ export default function Signup() {
             </div>
           </div>
           <button type="submit" className="btn btn-primary" style={{marginTop: 4}} disabled={loading}>
-            {loading ? 'Sending OTP...' : 'Continue →'}
+            {loading ? 'Sending OTP...' : 'Continue \u2192'}
           </button>
         </form>
         <p className="footer-link">Already have an account? <Link to="/login">Login</Link></p>
