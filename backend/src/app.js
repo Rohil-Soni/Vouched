@@ -73,7 +73,8 @@ app.use('/disputes', disputeRoutes);
 app.use('/archive', archiveRoutes);
 app.use('/nudges', nudgeRoutes);
 app.use('/moderator', moderatorRoutes);
-
+app.use('/admin', adminRoutes);
+    
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
