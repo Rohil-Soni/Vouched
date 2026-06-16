@@ -16,7 +16,7 @@ const signup = async (req, res, next) => {
     const existing = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
     if (existing.rows.length) return res.status(409).json({ error: 'Email already registered' });
 
-    const role = year_of_study >= 3 ? 'SENIOR' : 'FRESHER';
+    const role = year_of_study >= 2 ? 'SENIOR' : 'FRESHER';
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     otpStore.set(email, { otp, expires: Date.now() + 10 * 60 * 1000, name, branch, year_of_study, college_id: rows[0].id, role });
 
