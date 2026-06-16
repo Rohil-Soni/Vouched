@@ -10,6 +10,7 @@ const disputeRoutes = require('./routes/disputes');
 const archiveRoutes = require('./routes/archive');
 const nudgeRoutes = require('./routes/nudges');
 const moderatorRoutes = require('./routes/moderator');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -77,5 +78,7 @@ app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
 });
+
+app.use('/admin', adminRoutes);
 
 module.exports = app;
