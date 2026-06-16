@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
       const navigate = useNavigate();
       const { user } = useAuth();
     
-      if (!user || user.role !== 'SENIOR') return null;
+      if (!user) return null;
     
       return (
         <button
