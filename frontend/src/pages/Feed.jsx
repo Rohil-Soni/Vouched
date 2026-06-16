@@ -55,8 +55,8 @@ export default function Feed() {
           </div>
           <div style={{
             padding: '10px 16px', borderRadius: 'var(--radius-sm)',
-            background: 'rgba(124, 58, 237, 0.06)',
-            border: '1px solid rgba(124, 58, 237, 0.15)',
+            background: 'rgba(249, 115, 22, 0.06)',
+            border: '1px solid rgba(249, 115, 22, 0.15)',
             fontSize: 13, fontWeight: 600, color: 'var(--accent-light)'
           }}>
             {tips.length} total tips shared

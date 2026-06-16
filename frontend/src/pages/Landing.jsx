@@ -17,7 +17,7 @@ export default function Landing() {
       }}>
         <div style={{
           fontSize: 22, fontWeight: 900,
-          background: 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 50%, #06b6d4 100%)',
+          background: 'linear-gradient(135deg, #fb923c 0%, #f43f5e 50%, #eab308 100%)',
           WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
           letterSpacing: '-0.5px'
         }}>
@@ -52,7 +52,7 @@ export default function Landing() {
           position: 'absolute', top: '20%', left: '50%',
           transform: 'translateX(-50%)',
           width: 600, height: 600,
-          background: 'radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, transparent 70%)',
           pointerEvents: 'none'
         }} />
 
@@ -62,7 +62,7 @@ export default function Landing() {
         }}>
           College intelligence{' '}
           <span style={{
-            background: 'linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f97316 100%)',
+            background: 'linear-gradient(135deg, #fb923c 0%, #f43f5e 50%, #eab308 100%)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
           }}>
             worth trusting
@@ -106,13 +106,13 @@ export default function Landing() {
             <div style={{ textAlign: 'center', padding: '0 10px' }}>
               <div style={{
                 width: 64, height: 64,
-                background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(168, 85, 247, 0.1))',
-                border: '2px solid rgba(124, 58, 237, 0.3)',
+                background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(251, 146, 60, 0.1))',
+                border: '2px solid rgba(249, 115, 22, 0.3)',
                 borderRadius: '50%',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 24, fontWeight: 900, color: 'var(--accent-light)',
+                fontSize: 24, fontWeight: 900, color: 'var(--orange)',
                 margin: '0 auto 20px',
-                boxShadow: '0 8px 24px rgba(124, 58, 237, 0.15)'
+                boxShadow: '0 8px 24px rgba(249, 115, 22, 0.15)'
               }}>
                 1
               </div>
@@ -125,13 +125,13 @@ export default function Landing() {
             <div style={{ textAlign: 'center', padding: '0 10px' }}>
               <div style={{
                 width: 64, height: 64,
-                background: 'linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(249, 115, 22, 0.1))',
-                border: '2px solid rgba(236, 72, 153, 0.3)',
+                background: 'linear-gradient(135deg, rgba(244, 63, 94, 0.15), rgba(249, 115, 22, 0.1))',
+                border: '2px solid rgba(244, 63, 94, 0.3)',
                 borderRadius: '50%',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 24, fontWeight: 900, color: 'var(--pink)',
+                fontSize: 24, fontWeight: 900, color: 'var(--coral)',
                 margin: '0 auto 20px',
-                boxShadow: '0 8px 24px rgba(236, 72, 153, 0.15)'
+                boxShadow: '0 8px 24px rgba(244, 63, 94, 0.15)'
               }}>
                 2
               </div>
@@ -218,7 +218,7 @@ export default function Landing() {
       <section style={{
         padding: '80px 28px',
         textAlign: 'center',
-        background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(236, 72, 153, 0.05) 50%, rgba(6, 182, 212, 0.05) 100%)',
+        background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(244, 63, 94, 0.05) 50%, rgba(234, 179, 8, 0.05) 100%)',
         borderTop: '1px solid var(--border)',
         borderBottom: '1px solid var(--border)'
       }}>

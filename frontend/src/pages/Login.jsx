@@ -125,8 +125,8 @@ export default function Login() {
                       onClick={() => { setEmail(saved); setShowSuggestions(false); }}
                       style={{
                         padding: '8px 14px', cursor: 'pointer', fontSize: 14,
-                        color: email === saved ? '#7c3aed' : '#374151',
-                        background: email === saved ? '#f5f3ff' : 'transparent'
+                        color: email === saved ? '#fb923c' : '#374151',
+                        background: email === saved ? '#fff7ed' : 'transparent'
                       }}
                       onMouseEnter={e => e.target.style.background = '#f3f4f6'}
                       onMouseLeave={e => e.target.style.background = 'transparent'}

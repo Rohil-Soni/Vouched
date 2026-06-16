@@ -45,8 +45,8 @@ export default function TipDetail() {
   const credColor = getCredibilityColor(tip.author_credibility);
   const credTier = getCredibilityTier(tip.author_credibility);
   const CAT_COLOR = {
-    SCHOLARSHIP: '#f5a623', EXAM: '#f25c7a', PLACEMENT: '#b06af7',
-    FACULTY: '#4da6ff', CLUB: '#22d3a0', ADMIN: '#5a5a7a',
+    SCHOLARSHIP: '#f5a623', EXAM: '#f25c7a', PLACEMENT: '#f97316',
+    FACULTY: '#4da6ff', CLUB: '#22d3a0', ADMIN: '#a08070',
   };
 
   return (

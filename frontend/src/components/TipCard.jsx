@@ -5,8 +5,8 @@ const CAT_CLASS = {
   FACULTY: 'badge-faculty', CLUB: 'badge-club', ADMIN: 'badge-admin',
 };
 const CAT_COLOR = {
-  SCHOLARSHIP: '#f5a623', EXAM: '#f25c7a', PLACEMENT: '#b06af7',
-  FACULTY: '#4da6ff', CLUB: '#22d3a0', ADMIN: '#5a5a7a',
+  SCHOLARSHIP: '#f5a623', EXAM: '#f25c7a', PLACEMENT: '#f97316',
+  FACULTY: '#4da6ff', CLUB: '#22d3a0', ADMIN: '#a08070',
 };
 
 const daysLeft = (expiry) => Math.ceil((new Date(expiry) - Date.now()) / 86400000);
