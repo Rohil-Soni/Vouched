@@ -1,22 +1,22 @@
-/* Floating plus tip button */
-.plus-tip-btn {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 56px;
-  height: 56px;
-  background: var(--grad-accent);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 28px;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  cursor: pointer;
-  z-index: 999;
-  transition: transform 0.2s;
-}
-.plus-tip-btn:hover { transform: scale(1.1); }
+/* Floating + button for tips */
+    .plus-tip-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      background: var(--grad-accent);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 28px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      cursor: pointer;
+      z-index: 999;
+      transition: transform 0.2s;
+    }
+    .plus-tip-btn:hover { transform: scale(1.1); }

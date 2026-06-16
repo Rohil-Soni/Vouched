@@ -15,6 +15,7 @@ import ArchiveSubmit from './pages/ArchiveSubmit';
 import TipDetail from './pages/TipDetail';
 import ModeratorQueue from './pages/ModeratorQueue';
 import { useAuth } from './context/AuthContext';
+import PlusTipButton from './components/PlusTipButton';
 
 function AppShell() {
   const { user } = useAuth();
