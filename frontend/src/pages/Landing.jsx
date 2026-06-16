@@ -10,9 +10,8 @@ export default function Landing() {
       <nav style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         padding: '20px 32px',
-        background: 'rgba(12, 12, 29, 0.8)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        background: 'var(--bg)',
+        borderBottom: '1px solid var(--border)',
         position: 'sticky', top: 0, zIndex: 100
       }}>
         <div style={{
