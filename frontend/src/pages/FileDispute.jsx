@@ -30,33 +30,57 @@ export default function FileDispute() {
   };
 
   return (
-    <div className="page page--narrow">
-      <h2>File a Dispute</h2>
-      <p className="page__subtitle">
-        Disputing a tip affects your credibility too if rejected. Answer honestly.
-      </p>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit} className="form">
-        <label>1. What specifically was inaccurate?</label>
-        <textarea value={form.q1_what_wrong} onChange={set('q1_what_wrong')} required rows={3} />
+    <div className="main page--narrow">
+      <button onClick={() => navigate(-1)} style={{ color: 'var(--text2)', fontSize: 13, background: 'none', border: 'none', cursor: 'pointer', display: 'inline-block', marginBottom: 24, textDecoration: 'underline' }}>
+        Back to tip
+      </button>
 
-        <label>2. Did you personally act on this tip?</label>
-        <div className="radio-group">
-          <label><input type="radio" name="acted" value="yes" onChange={() => setForm({ ...form, q2_acted_on_tip: 'yes' })} /> Yes</label>
-          <label><input type="radio" name="acted" value="no" onChange={() => setForm({ ...form, q2_acted_on_tip: 'no' })} /> No</label>
-        </div>
+      <div className="form-card">
+        <h2>File a Dispute</h2>
+        <p className="subtitle">
+          Disputing a tip affects your credibility too if rejected. Answer honestly — the system relies on good-faith reports.
+        </p>
 
-        <label>3. What was the actual outcome you experienced?</label>
-        <textarea value={form.q3_actual_outcome} onChange={set('q3_actual_outcome')} required rows={3} />
+        {error && <p className="error-msg" style={{ marginBottom: 20 }}>{error}</p>}
 
-        <label>4. When did this happen?</label>
-        <input type="date" value={form.q4_when_happened} onChange={set('q4_when_happened')} required />
+        <form onSubmit={handleSubmit} className="form">
+          <div className="field">
+            <label>1. What specifically was inaccurate?</label>
+            <textarea value={form.q1_what_wrong} onChange={set('q1_what_wrong')} required rows={3} placeholder="Describe exactly what part of the tip is wrong and why." />
+          </div>
 
-        <label>5. Supporting evidence <span className="hint">(optional)</span></label>
-        <textarea value={form.q5_evidence} onChange={set('q5_evidence')} rows={2} placeholder="Screenshot description, links, etc." />
+          <div className="field">
+            <label>2. Did you personally act on this tip?</label>
+            <div className="radio-group">
+              <label><input type="radio" name="acted" value="yes" onChange={() => setForm({ ...form, q2_acted_on_tip: 'yes' })} /> Yes, I relied on this tip</label>
+              <label><input type="radio" name="acted" value="no" onChange={() => setForm({ ...form, q2_acted_on_tip: 'no' })} /> No, I read it after the fact</label>
+            </div>
+          </div>
 
-        <button type="submit" disabled={loading}>{loading ? 'Filing...' : 'Submit Dispute'}</button>
-      </form>
+          <div className="field">
+            <label>3. What was the actual outcome you experienced?</label>
+            <textarea value={form.q3_actual_outcome} onChange={set('q3_actual_outcome')} required rows={3} placeholder="What happened when you followed (or investigated) the tip? Be specific." />
+          </div>
+
+          <div className="field">
+            <label>4. When did this happen?</label>
+            <input type="date" value={form.q4_when_happened} onChange={set('q4_when_happened')} required />
+          </div>
+
+          <div className="field">
+            <label>5. Supporting evidence <span className="hint">(optional)</span></label>
+            <textarea value={form.q5_evidence} onChange={set('q5_evidence')} rows={2} placeholder="Screenshot description, email forwarding details, links to official sources, etc." />
+          </div>
+
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading ? 'Submitting Dispute...' : 'Submit Dispute'}
+          </button>
+        </form>
+
+        <p style={{ fontSize: 12, color: 'var(--text3)', textAlign: 'center', marginTop: 20 }}>
+          False disputes negatively impact your credibility score. Only file if you're certain.
+        </p>
+      </div>
     </div>
   );
 }

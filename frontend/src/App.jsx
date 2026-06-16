@@ -20,7 +20,7 @@ function AppShell() {
   return (
     <>
       {user && <Navbar />}
-      <main className={user ? '' : 'main'}>
+      <main>
         <Routes>
           <Route path="/" element={user ? <Navigate to="/feed" replace /> : <Landing />} />
           <Route path="/signup" element={<Signup />} />

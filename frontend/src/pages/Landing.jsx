@@ -5,10 +5,22 @@ export default function Landing() {
   const { user } = useAuth();
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+    <div style={{ minHeight: '100vh' }}>
       {/* Header */}
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 28px', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ fontSize: 20, fontWeight: 800, background: 'linear-gradient(135deg, #a090ff, #7c6af7, #4da6ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+      <nav style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '20px 32px',
+        background: 'rgba(12, 12, 29, 0.8)',
+        backdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        position: 'sticky', top: 0, zIndex: 100
+      }}>
+        <div style={{
+          fontSize: 22, fontWeight: 900,
+          background: 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 50%, #06b6d4 100%)',
+          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+          letterSpacing: '-0.5px'
+        }}>
           Vouched
         </div>
         {user ? (
@@ -16,169 +28,224 @@ export default function Landing() {
             Go to Feed
           </Link>
         ) : (
-          <div style={{ display: 'flex', gap: 12 }}>
-            <Link to="/login" className="nav-link">Login</Link>
-            <Link to="/signup" className="btn btn-primary" style={{ width: 'auto', padding: '10px 20px' }}>Sign Up</Link>
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <Link to="/login" style={{ color: 'var(--text2)', fontWeight: 600, fontSize: 14, padding: '8px 16px', borderRadius: 8, transition: 'all 0.2s' }}
+              onMouseEnter={e => {e.target.style.color = '#fff'; e.target.style.background = 'rgba(255,255,255,0.06)'}}
+              onMouseLeave={e => {e.target.style.color = 'var(--text2)'; e.target.style.background = 'transparent'}}
+            >
+              Login
+            </Link>
+            <Link to="/signup" className="btn btn-primary" style={{ width: 'auto', padding: '10px 24px' }}>Sign Up</Link>
           </div>
         )}
       </nav>
 
       {/* Hero Section */}
-      <section style={{ padding: '120px 28px', textAlign: 'center', maxWidth: '900px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: 48, fontWeight: 800, marginBottom: 20, lineHeight: 1.2 }}>
-          Intelligence From Those <span style={{ background: 'linear-gradient(135deg, #a090ff, #7c6af7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Who've Been There</span>
+      <section style={{
+        padding: '120px 28px',
+        textAlign: 'center',
+        maxWidth: 800,
+        margin: '0 auto',
+        position: 'relative'
+      }}>
+        <div style={{
+          position: 'absolute', top: '20%', left: '50%',
+          transform: 'translateX(-50%)',
+          width: 600, height: 600,
+          background: 'radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 70%)',
+          pointerEvents: 'none'
+        }} />
+
+        <h1 style={{
+          fontSize: 52, fontWeight: 900, marginBottom: 24, lineHeight: 1.15,
+          position: 'relative', letterSpacing: '-1px'
+        }}>
+          College intelligence{' '}
+          <span style={{
+            background: 'linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f97316 100%)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
+          }}>
+            worth trusting
+          </span>
         </h1>
-        
-        <p style={{ fontSize: 18, color: 'var(--text2)', marginBottom: 40, lineHeight: 1.6, maxWidth: 700, margin: '0 auto 40px' }}>
-          Some students arrive at college already knowing the game. First-generation students don't get that conversation. <strong>Vouched exists to give it to them.</strong>
+
+        <p style={{
+          fontSize: 18, color: 'var(--text2)', marginBottom: 48, lineHeight: 1.7,
+          maxWidth: 640, margin: '0 auto 48px', position: 'relative'
+        }}>
+          Seniors share real, actionable advice about courses, placements, events, professors, and online resources. Every tip carries a personal credibility score — so you know exactly who to trust.
         </p>
 
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginBottom: 60 }}>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', position: 'relative', flexWrap: 'wrap' }}>
           {!user && (
             <>
-              <Link to="/signup" className="btn btn-primary" style={{ width: 'auto', padding: '14px 32px', fontSize: 16 }}>
-                Get Started
+              <Link to="/signup" className="btn btn-primary" style={{ width: 'auto', padding: '14px 36px', fontSize: 16 }}>
+                Create Your Account
               </Link>
-              <Link to="/login" className="btn btn-secondary" style={{ width: 'auto', padding: '14px 32px', fontSize: 16 }}>
-                I Have an Account
+              <Link to="/login" className="btn btn-secondary" style={{ width: 'auto', padding: '14px 36px', fontSize: 16 }}>
+                Already Registered?
               </Link>
             </>
           )}
         </div>
-
-        {/* Trust Badges */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 24, marginBottom: 80, flexWrap: 'wrap' }}>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 32, fontWeight: 800, color: 'var(--accent)', marginBottom: 8 }}>5000+</div>
-            <div style={{ fontSize: 13, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 600 }}>Active Seniors</div>
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 32, fontWeight: 800, color: 'var(--accent)', marginBottom: 8 }}>25</div>
-            <div style={{ fontSize: 13, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 600 }}>Colleges</div>
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 32, fontWeight: 800, color: 'var(--accent)', marginBottom: 8 }}>10k+</div>
-            <div style={{ fontSize: 13, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 600 }}>Tips Shared</div>
-          </div>
-        </div>
       </section>
 
       {/* How It Works */}
-      <section style={{ background: 'var(--surface)', padding: '80px 28px', marginBottom: 80 }}>
+      <section style={{
+        padding: '100px 28px',
+        background: 'rgba(255, 255, 255, 0.02)',
+        borderTop: '1px solid var(--border)',
+        borderBottom: '1px solid var(--border)'
+      }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <h2 style={{ fontSize: 32, fontWeight: 800, marginBottom: 60, textAlign: 'center' }}>How Vouched Works</h2>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32 }}>
-            {/* Step 1 */}
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ width: 60, height: 60, background: 'var(--accent-glow)', border: '2px solid var(--accent)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 800, color: 'var(--accent)', margin: '0 auto 20px' }}>
+          <h2 style={{ fontSize: 32, fontWeight: 800, marginBottom: 60, textAlign: 'center' }}>
+            How it works
+          </h2>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 32 }}>
+            <div style={{ textAlign: 'center', padding: '0 10px' }}>
+              <div style={{
+                width: 64, height: 64,
+                background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(168, 85, 247, 0.1))',
+                border: '2px solid rgba(124, 58, 237, 0.3)',
+                borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 24, fontWeight: 900, color: 'var(--accent-light)',
+                margin: '0 auto 20px',
+                boxShadow: '0 8px 24px rgba(124, 58, 237, 0.15)'
+              }}>
                 1
               </div>
-              <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 12 }}>Seniors Share Tips</h3>
-              <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.6 }}>
-                Seniors submit structured tips about scholarships, placements, faculty, and club insights. Every tip carries their credibility.
+              <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 12, color: 'var(--text)' }}>Seniors share what they know</h3>
+              <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.7 }}>
+                Tips about events worth attending, resources worth reading, professors worth approaching, and deadlines worth knowing. Each tip is timestamped and carries the author's credibility score.
               </p>
             </div>
 
-            {/* Step 2 */}
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ width: 60, height: 60, background: 'var(--accent-glow)', border: '2px solid var(--accent)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 800, color: 'var(--accent)', margin: '0 auto 20px' }}>
+            <div style={{ textAlign: 'center', padding: '0 10px' }}>
+              <div style={{
+                width: 64, height: 64,
+                background: 'linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(249, 115, 22, 0.1))',
+                border: '2px solid rgba(236, 72, 153, 0.3)',
+                borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 24, fontWeight: 900, color: 'var(--pink)',
+                margin: '0 auto 20px',
+                boxShadow: '0 8px 24px rgba(236, 72, 153, 0.15)'
+              }}>
                 2
               </div>
-              <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 12 }}>Freshers Get Nudges</h3>
-              <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.6 }}>
-                Set your profile once. Get reminders 3 weeks, 1 week, and 3 days before important deadlines hit.
+              <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 12, color: 'var(--text)' }}>The community vouches for accuracy</h3>
+              <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.7 }}>
+                Every tip can be co-signed or disputed. Accurate contributions increase your credibility score. Misleading information lowers it. The system rewards honesty.
               </p>
             </div>
 
-            {/* Step 3 */}
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ width: 60, height: 60, background: 'var(--accent-glow)', border: '2px solid var(--accent)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 800, color: 'var(--accent)', margin: '0 auto 20px' }}>
+            <div style={{ textAlign: 'center', padding: '0 10px' }}>
+              <div style={{
+                width: 64, height: 64,
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(52, 211, 153, 0.1))',
+                border: '2px solid rgba(16, 185, 129, 0.3)',
+                borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 24, fontWeight: 900, color: 'var(--green-light)',
+                margin: '0 auto 20px',
+                boxShadow: '0 8px 24px rgba(16, 185, 129, 0.15)'
+              }}>
                 3
               </div>
-              <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 12 }}>Credibility Matters</h3>
-              <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.6 }}>
-                Accurate tips build trust. Wrong tips lose credibility. The system is designed so reputation is everything.
+              <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 12, color: 'var(--text)' }}>Freshers make informed decisions</h3>
+              <p style={{ color: 'var(--text2)', fontSize: 14, lineHeight: 1.7 }}>
+                No more guessing which event is worth your time or which resource deserves your attention. See everything ranked by urgency and the credibility of the person who shared it.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Key Features */}
-      <section style={{ maxWidth: 900, margin: '0 auto', padding: '80px 28px', marginBottom: 80 }}>
-        <h2 style={{ fontSize: 32, fontWeight: 800, marginBottom: 60, textAlign: 'center' }}>Why Vouched Works</h2>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
-          <div style={{ background: 'var(--surface)', padding: 24, borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 28, marginBottom: 12 }}>🎯</div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 10 }}>Urgency-Based Ranking</h3>
-            <p style={{ color: 'var(--text2)', fontSize: 13, lineHeight: 1.6 }}>
-              Tips are ranked by both urgency and contributor credibility. You see what matters most, from people you can trust.
-            </p>
-          </div>
+      {/* Why It Works - Features */}
+      <section style={{ maxWidth: 900, margin: '0 auto', padding: '100px 28px' }}>
+        <h2 style={{ fontSize: 32, fontWeight: 800, marginBottom: 60, textAlign: 'center' }}>
+          Every contribution is backed by reputation
+        </h2>
 
-          <div style={{ background: 'var(--surface)', padding: 24, borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 28, marginBottom: 12 }}>✓</div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 10 }}>College-Verified</h3>
-            <p style={{ color: 'var(--text2)', fontSize: 13, lineHeight: 1.6 }}>
-              Signup requires your college email. Freshers can read. Seniors can write. Everyone's verified.
-            </p>
-          </div>
-
-          <div style={{ background: 'var(--surface)', padding: 24, borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 28, marginBottom: 12 }}>⚙️</div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 10 }}>Friction-Based Disputes</h3>
-            <p style={{ color: 'var(--text2)', fontSize: 13, lineHeight: 1.6 }}>
-              Reporting a tip isn't a button tap. It's structured. Evidence matters. Bad-faith reports get penalized.
-            </p>
-          </div>
-
-          <div style={{ background: 'var(--surface)', padding: 24, borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 28, marginBottom: 12 }}>🔔</div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 10 }}>Smart Nudges</h3>
-            <p style={{ color: 'var(--text2)', fontSize: 13, lineHeight: 1.6 }}>
-              Not just reminders. Full context. You get pinged 3 weeks, 1 week, and 3 days before windows close.
-            </p>
-          </div>
-
-          <div style={{ background: 'var(--surface)', padding: 24, borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 28, marginBottom: 12 }}>🔒</div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 10 }}>Trust Circles</h3>
-            <p style={{ color: 'var(--text2)', fontSize: 13, lineHeight: 1.6 }}>
-              Private groups. Invite only. For sensitive tips. Can be anonymously escalated if group vouches it.
-            </p>
-          </div>
-
-          <div style={{ background: 'var(--surface)', padding: 24, borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 28, marginBottom: 12 }}>📖</div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 10 }}>Archive</h3>
-            <p style={{ color: 'var(--text2)', fontSize: 13, lineHeight: 1.6 }}>
-              Permanent, living record of how your college works. Moderated. Anonymous. Gets indexed forever.
-            </p>
-          </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
+          {[
+            {
+              title: 'Credibility score',
+              desc: 'Every user has a visible score based on the accuracy of their contributions. Higher score equals higher trust. The score is earned, not given.'
+            },
+            {
+              title: 'Dispute system',
+              desc: 'If a tip is wrong, anyone can file a structured dispute. Moderators with 75+ credibility review evidence and vote. False reports are penalized too.'
+            },
+            {
+              title: 'Co-signing',
+              desc: 'Seniors can co-sign each other\'s tips, adding a second layer of verification. A co-signed tip carries more weight.'
+            },
+            {
+              title: 'Confidence staking',
+              desc: 'When submitting a tip, seniors stake their reputation on Low, Medium, or High confidence. Higher stakes mean higher rewards for accuracy and bigger penalties for mistakes.'
+            },
+            {
+              title: 'Smart filters',
+              desc: 'Filter tips by category, urgency, or branch. See what matters most to you, when it matters.'
+            },
+            {
+              title: 'Permanent archive',
+              desc: 'Verified tips get archived permanently. A living record of how your college actually works, built by students who\'ve been through it.'
+            }
+          ].map(feature => (
+            <div key={feature.title} style={{
+              padding: 28,
+              background: 'rgba(255, 255, 255, 0.03)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-md)',
+              transition: 'all 0.3s var(--ease-out)',
+            }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 10, color: 'var(--text)' }}>
+                {feature.title}
+              </h3>
+              <p style={{ color: 'var(--text2)', fontSize: 13, lineHeight: 1.7 }}>
+                {feature.desc}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section style={{ background: 'linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%)', padding: '80px 28px', textAlign: 'center', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
+      <section style={{
+        padding: '80px 28px',
+        textAlign: 'center',
+        background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(236, 72, 153, 0.05) 50%, rgba(6, 182, 212, 0.05) 100%)',
+        borderTop: '1px solid var(--border)',
+        borderBottom: '1px solid var(--border)'
+      }}>
         <div style={{ maxWidth: 600, margin: '0 auto' }}>
-          <h2 style={{ fontSize: 28, fontWeight: 700, marginBottom: 16 }}>Ready to Know What They Know?</h2>
+          <h2 style={{ fontSize: 28, fontWeight: 700, marginBottom: 16, color: 'var(--text)' }}>
+            Ready to know what they know?
+          </h2>
           <p style={{ color: 'var(--text2)', fontSize: 15, marginBottom: 32, lineHeight: 1.6 }}>
-            Join seniors from your college who are already sharing what they know. Your first-generation advantage starts here.
+            Join seniors who are already sharing what they wish they knew as freshers. Your college experience should be guided by people who have actually been through it.
           </p>
           {!user && (
-            <Link to="/signup" className="btn btn-primary" style={{ width: 'auto', display: 'inline-flex', padding: '14px 40px', fontSize: 16 }}>
-              Sign Up Now →
+            <Link to="/signup" className="btn btn-primary" style={{ width: 'auto', display: 'inline-flex', padding: '14px 44px', fontSize: 16 }}>
+              Sign Up Now
             </Link>
           )}
         </div>
       </section>
 
       {/* Footer */}
-      <footer style={{ padding: '40px 28px', textAlign: 'center', color: 'var(--text3)', fontSize: 12, borderTop: '1px solid var(--border)' }}>
-        <p>Vouched — Intelligence from those who've been there</p>
-        <p style={{ marginTop: 12 }}>© 2026. All rights reserved.</p>
+      <footer style={{
+        padding: '40px 28px',
+        textAlign: 'center',
+        color: 'var(--text3)',
+        fontSize: 12
+      }}>
+        <p>Vouched — College intelligence worth trusting</p>
+        <p style={{ marginTop: 8 }}>Built by students, for students. &copy; 2026.</p>
       </footer>
     </div>
   );

@@ -22,17 +22,47 @@ export default function Feed() {
 
   const filtered = filter === 'ALL' ? tips : tips.filter(t => t.category === filter);
 
+  const trustedCount = tips.filter(t => (t.author_credibility || 0) >= 75).length;
+
   return (
     <div className="main">
       <div className="page-header" style={{display:'flex', alignItems:'flex-start', justifyContent:'space-between'}}>
         <div>
           <h2>Intelligence Feed</h2>
-          <p className="page__subtitle">Ranked by urgency × contributor credibility</p>
+          <p className="page__subtitle">
+            {tips.length > 0
+              ? `Showing ${filtered.length} tips ranked by urgency and contributor credibility`
+              : 'Ranked by urgency and contributor credibility'}
+          </p>
         </div>
         {user?.role === 'SENIOR' && (
-          <Link to="/submit" className="btn btn-primary" style={{width:'auto', padding:'10px 20px'}}>+ Submit Tip</Link>
+          <Link to="/submit" className="btn btn-primary" style={{width:'auto', padding:'10px 20px', whiteSpace:'nowrap'}}>+ Submit Tip</Link>
         )}
       </div>
+
+      {/* Trust summary - only show if there are tips */}
+      {tips.length > 0 && !loading && (
+        <div style={{
+          display: 'flex', gap: 16, marginBottom: 24, flexWrap: 'wrap'
+        }}>
+          <div style={{
+            padding: '10px 16px', borderRadius: 'var(--radius-sm)',
+            background: 'rgba(16, 185, 129, 0.06)',
+            border: '1px solid rgba(16, 185, 129, 0.15)',
+            fontSize: 13, fontWeight: 600, color: 'var(--green-light)'
+          }}>
+            {trustedCount} tips from trusted contributors (75+)
+          </div>
+          <div style={{
+            padding: '10px 16px', borderRadius: 'var(--radius-sm)',
+            background: 'rgba(124, 58, 237, 0.06)',
+            border: '1px solid rgba(124, 58, 237, 0.15)',
+            fontSize: 13, fontWeight: 600, color: 'var(--accent-light)'
+          }}>
+            {tips.length} total tips shared
+          </div>
+        </div>
+      )}
 
       <div className="filters">
         {CATEGORIES.map(cat => (
@@ -47,10 +77,11 @@ export default function Feed() {
 
       {!loading && filtered.length === 0 && (
         <div className="empty-state">
-          <div className="empty-state__icon">📭</div>
           <div className="empty-state__title">No tips yet</div>
           <div className="empty-state__desc">
-            {user?.role === 'SENIOR' ? 'Be the first to share intelligence with your college.' : 'Check back soon — seniors are adding tips.'}
+            {user?.role === 'SENIOR'
+              ? 'Be the first to share intelligence with your college. Your credibility starts with your first post.'
+              : 'Check back soon. Seniors in your college are adding tips.'}
           </div>
         </div>
       )}
