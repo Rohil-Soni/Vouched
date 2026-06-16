@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
+import PlusTipButton from './components/PlusTipButton';
 import Landing from './pages/Landing';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
@@ -20,6 +21,7 @@ function AppShell() {
   return (
     <>
       {user && <Navbar />}
+      <PlusTipButton />
       <main>
         <Routes>
           <Route path="/" element={user ? <Navigate to="/feed" replace /> : <Landing />} />
