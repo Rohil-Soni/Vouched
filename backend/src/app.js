@@ -40,7 +40,7 @@ if (process.env.CLIENT_URL && !allowedOrigins.includes(process.env.CLIENT_URL)) 
 }
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: 'https://vouched.co.in', // Only allow this origin
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
