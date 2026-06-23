@@ -1,0 +1,123 @@
+/* ── MODAL OVERLAY (the dark backdrop) ── */
+/* This sits on top of everything, covering the whole screen */
+.modal-overlay {
+  position: fixed;          /* stays in place even when scrolling */
+  inset: 0;                 /* shorthand for top:0; right:0; bottom:0; left:0 */
+  background: rgba(0, 0, 0, 0.5);   /* semi-transparent black */
+  backdrop-filter: blur(4px);        /* blurs whatever is behind it */
+  display: flex;            /* centers the modal card */
+  align-items: center;      /* vertically center */
+  justify-content: center;  /* horizontally center */
+  z-index: 1000;            /* very high so it's above everything */
+  animation: fadeIn 0.2s ease-out;   /* smooth fade-in */
+}
+
+/* ── MODAL CARD (the white popup) ── */
+/* This is the actual form container — like a compose email window */
+.modal-card {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;          /* never taller than 90% of screen height */
+  overflow-y: auto;          /* scroll inside if content is too long */
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.25s ease-out;  /* slides up from below */
+  position: relative;
+}
+
+/* ── MODAL HEADER (the top bar with "New Tip" + close button) ── */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Close button (X) */
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #f3f4f6;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  color: #666;
+}
+.modal-close:hover {
+  background: #e5e7eb;
+}
+
+/* ── MODAL BODY (the form area) ── */
+.modal-body {
+  padding: 24px;
+}
+
+/* Each form field gets a gap below */
+.modal-body .field {
+  margin-bottom: 16px;
+}
+
+/* ── CHARACTER COUNTER ── */
+/* Shows how many characters typed vs limit (1000 for body) */
+.char-count {
+  text-align: right;
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+.char-count--warn {
+  color: #f59e0b;     /* orange when getting close to limit */
+}
+.char-count--danger {
+  color: #ef4444;     /* red when at limit */
+}
+
+/* ── MODAL FOOTER (Cancel + Submit buttons) ── */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #eee;
+}
+
+/* ── TOAST NOTIFICATION ── */
+/* A small banner that appears at the top after successful submission */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #10b981;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 2000;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.toast--error {
+  background: #ef4444;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+}
+
+/* ── MAKE SURE THE + BUTTON STAYS ABOVE THE OVERLAY ── */
+.plus-tip-btn {
+  z-index: 1001;   /* higher than the overlay (1000) so it stays clickable */
+}

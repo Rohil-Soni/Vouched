@@ -6,26 +6,44 @@ import TipCard from '../components/TipCard';
 
 const CATEGORIES = ['ALL', 'SCHOLARSHIP', 'EXAM', 'PLACEMENT', 'FACULTY', 'CLUB', 'ADMIN'];
 
-export default function Feed() {
+export default function Feed({ tipRefreshKey }) {
   const { user } = useAuth();
   const [tips, setTips] = useState([]);
   const [filter, setFilter] = useState('ALL');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [toast, setToast] = useState('');
 
+  // ── Fetch tips from the backend ──
+  // Re-fetches whenever tipRefreshKey changes (e.g. after new tip submission)
   useEffect(() => {
     api.get('/tips')
-      .then(({ data }) => setTips(data))
+      .then(({ data }) => {
+        setTips(data);
+        // If this is a refresh (not initial load), show a toast
+        if (tipRefreshKey > 0) {
+          setToast('✓ Tip submitted! Awaiting a co-signer to go live.');
+        }
+      })
       .catch(() => setError('Failed to load feed'))
       .finally(() => setLoading(false));
-  }, []);
+  }, [tipRefreshKey]);
+
+  // ── Auto-dismiss toast after 4 seconds ──
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(''), 4000);
+    return () => clearTimeout(timer);
+  }, [toast]);
 
   const filtered = filter === 'ALL' ? tips : tips.filter(t => t.category === filter);
-
   const trustedCount = tips.filter(t => (t.author_credibility || 0) >= 75).length;
 
   return (
     <div className="main">
+      {/* ── Toast notification ── */}
+      {toast && <div className="toast">{toast}</div>}
+
       <div className="page-header" style={{display:'flex', alignItems:'flex-start', justifyContent:'space-between'}}>
         <div>
           <h2>Intelligence Feed</h2>

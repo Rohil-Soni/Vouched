@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -18,16 +19,22 @@ import { useAuth } from './context/AuthContext';
 
 function AppShell() {
   const { user } = useAuth();
+
+  // ── Refresh key for the feed ──
+  // When the user submits a tip via the modal, this increments.
+  // Feed.jsx watches this key and re-fetches tips whenever it changes.
+  const [tipRefreshKey, setTipRefreshKey] = useState(0);
+
   return (
     <>
       {user && <Navbar />}
-      <PlusTipButton />
+      <PlusTipButton onTipSuccess={() => setTipRefreshKey(k => k + 1)} />
       <main>
         <Routes>
           <Route path="/" element={user ? <Navigate to="/feed" replace /> : <Landing />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/feed" element={<ProtectedRoute><Feed /></ProtectedRoute>} />
+          <Route path="/feed" element={<ProtectedRoute><Feed tipRefreshKey={tipRefreshKey} /></ProtectedRoute>} />
           <Route path="/tips/:id" element={<ProtectedRoute><TipDetail /></ProtectedRoute>} />
           <Route path="/submit" element={<ProtectedRoute role="SENIOR"><SubmitTip /></ProtectedRoute>} />
           <Route path="/dispute/:tipId" element={<ProtectedRoute><FileDispute /></ProtectedRoute>} />

@@ -141,8 +141,8 @@ a:hover { color: var(--accent); }
 }
 
 .navbar__logo-img {
-  height: 100px;
-  width: 100px;
+  height: 32px;
+  width: auto;
 }
 
 .navbar__links { display: flex; align-items: center; gap: 2px; }
@@ -259,6 +259,10 @@ a:hover { color: var(--accent); }
 }
 
 .auth-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   width: 100%;
   max-width: 420px;
   background: rgba(255, 255, 255, 0.04);
@@ -293,9 +297,10 @@ a:hover { color: var(--accent); }
 }
 
 .auth-card__logo-img {
+  display: block;
   max-width: 200px;
   height: auto;
-  margin-bottom: 16px;
+  margin: 0 auto 16px;
   position: relative;
   z-index: 1;
 }

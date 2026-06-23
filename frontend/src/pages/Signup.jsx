@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
-import logoVertical from '../assets/Logo with name vertical.png';
+import logoVertical from '../assets/logo-vertical.png';
 
 const EMAIL_STORAGE_KEY = 'vouched_emails';
 

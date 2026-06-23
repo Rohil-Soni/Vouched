@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import logoHorizontal from '../assets/Logo with name horizontal.png';
+import logoHorizontal from "../assets/logo-horizontal.png";
 
 export default function Landing() {
   const { user } = useAuth();

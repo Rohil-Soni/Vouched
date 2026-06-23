@@ -1,24 +1,37 @@
-import { useNavigate } from 'react-router-dom';
-    import { useAuth } from '../context/AuthContext';
-    import './PlusTipButton.css';
-    
-    /**
-     * A floating plus button that navigates to the tip submission page.
-     * Visible only for SENIOR role users.
-     */
-    export default function PlusTipButton() {
-      const navigate = useNavigate();
-      const { user } = useAuth();
-    
-      if (!user) return null;
-    
-      return (
-        <button
-          className="plus-tip-btn"
-          onClick={() => navigate('/submit')}
-          title="Add a Tip"
-        >
-          +
-        </button>
-      );
-    }
+import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import SubmitTipModal from './SubmitTipModal';
+import './PlusTipButton.css';
+
+/**
+ * Floating "+" button shown only for SENIOR users.
+ * Clicking it opens a mail-style tip submission modal.
+ *
+ * @param {Function} onTipSuccess - Called after a tip is successfully submitted,
+ *                                   so the feed can refresh.
+ */
+export default function PlusTipButton({ onTipSuccess }) {
+  const [showModal, setShowModal] = useState(false);
+  const { user } = useAuth();
+
+  // Only show for SENIOR users
+  if (!user || user.role !== 'SENIOR') return null;
+
+  return (
+    <>
+      <button
+        className="plus-tip-btn"
+        onClick={() => setShowModal(true)}
+        title="Add a Tip"
+      >
+        +
+      </button>
+
+      <SubmitTipModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onSuccess={onTipSuccess}
+      />
+    </>
+  );
+}
