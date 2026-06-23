@@ -15,7 +15,7 @@ export default function Landing() {
         borderBottom: '1px solid var(--border)',
         position: 'sticky', top: 0, zIndex: 100
       }}>
-        <img src={logoHorizontal} alt="Vouched" style={{ height: 32 }} />
+        <img src={logoHorizontal} alt="Vouched" className="navbar__logo-img" />
         {user ? (
           <Link to="/feed" className="btn btn-primary" style={{ width: 'auto', padding: '10px 20px' }}>
             Go to Feed

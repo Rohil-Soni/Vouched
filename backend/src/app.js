@@ -28,8 +28,9 @@ app.use(helmet({
 
 // CORS configuration - environment-aware
 const allowedOrigins = [
+  'https://vouched.co.in',
   'https://vouched.netlify.app',
-  'http://localhost:5173',
+  'http://localhost:5174',
   'http://localhost:3000',
   'http://localhost:5000',
 ];
