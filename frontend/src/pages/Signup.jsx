@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
+import logoVertical from '../assets/Logo with name vertical.png';
 
 const EMAIL_STORAGE_KEY = 'vouched_emails';
 
@@ -48,7 +49,7 @@ export default function Signup() {
   if (step === 'otp') return (
     <div className="auth-wrapper">
       <div className="auth-card">
-        <div className="auth-card__logo">Vouched</div>
+        <img src={logoVertical} alt="Vouched" className="auth-card__logo-img" />
         <h2>Check your email</h2>
         <p className="subtitle">We sent a 6-digit code to your college email.</p>
         <div className="otp-display">Sent to <strong>{form.email}</strong></div>
@@ -69,7 +70,7 @@ export default function Signup() {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
-        <div className="auth-card__logo">Vouched</div>
+        <img src={logoVertical} alt="Vouched" className="auth-card__logo-img" />
         <h2>Create your account</h2>
         <p className="subtitle">Use your college email to get verified access.</p>
         {error && <p className="error-msg">{error}</p>}

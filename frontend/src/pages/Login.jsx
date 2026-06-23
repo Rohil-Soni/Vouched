@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api';
+import logoVertical from '../assets/Logo with name vertical.png';
 
 const EMAIL_STORAGE_KEY = 'vouched_emails';
 
@@ -74,7 +75,7 @@ export default function Login() {
   if (step === 'otp') return (
     <div className="auth-wrapper">
       <div className="auth-card">
-        <div className="auth-card__logo">Vouched</div>
+        <img src={logoVertical} alt="Vouched" className="auth-card__logo-img" />
         <h2>Enter your OTP</h2>
         <p className="subtitle">6-digit code sent to your college email.</p>
         <div className="otp-display">Sent to <strong>{email}</strong></div>
@@ -95,7 +96,7 @@ export default function Login() {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
-        <div className="auth-card__logo">Vouched</div>
+        <img src={logoVertical} alt="Vouched" className="auth-card__logo-img" />
         <h2>Welcome back</h2>
         <p className="subtitle">Login with your college email — no password needed.</p>
         {error && <p className="error-msg">{error}</p>}

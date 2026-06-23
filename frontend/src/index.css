@@ -136,12 +136,13 @@ a:hover { color: var(--accent); }
 }
 
 .navbar__brand {
-  font-size: 22px;
-  font-weight: 900;
-  background: var(--grad-brand);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar__logo-img {
+  height: 28px;
+  width: auto;
 }
 
 .navbar__links { display: flex; align-items: center; gap: 2px; }
@@ -291,14 +292,10 @@ a:hover { color: var(--accent); }
   pointer-events: none;
 }
 
-.auth-card__logo {
-  font-size: 24px;
-  font-weight: 900;
-  background: var(--grad-brand);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
+.auth-card__logo-img {
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 16px;
   position: relative;
   z-index: 1;
 }

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logoHorizontal from '../assets/Logo with name horizontal.png';
 
 export default function Landing() {
   const { user } = useAuth();
@@ -14,14 +15,7 @@ export default function Landing() {
         borderBottom: '1px solid var(--border)',
         position: 'sticky', top: 0, zIndex: 100
       }}>
-        <div style={{
-          fontSize: 22, fontWeight: 900,
-          background: 'linear-gradient(135deg, #fb923c 0%, #f43f5e 50%, #eab308 100%)',
-          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-          letterSpacing: '-0.5px'
-        }}>
-          Vouched
-        </div>
+        <img src={logoHorizontal} alt="Vouched" style={{ height: 32 }} />
         {user ? (
           <Link to="/feed" className="btn btn-primary" style={{ width: 'auto', padding: '10px 20px' }}>
             Go to Feed

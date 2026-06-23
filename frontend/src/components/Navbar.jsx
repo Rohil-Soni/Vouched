@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logoHorizontal from '../assets/Logo with name horizontal.png';
 
 const getCredibilityTier = (score) => {
   if (score >= 75) return 'Trusted';
@@ -12,7 +13,9 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <NavLink to="/feed" className="navbar__brand">Vouched</NavLink>
+      <NavLink to="/feed" className="navbar__brand">
+        <img src={logoHorizontal} alt="Vouched" className="navbar__logo-img" />
+      </NavLink>
       <div className="navbar__links">
         <NavLink to="/feed" className={({ isActive }) => `nav-link${isActive ? ' nav-link--active' : ''}`}>Feed</NavLink>
         <NavLink to="/archive" className={({ isActive }) => `nav-link${isActive ? ' nav-link--active' : ''}`}>Archive</NavLink>
